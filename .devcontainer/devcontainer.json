@@ -1,0 +1,53 @@
+{
+	"dockerFile": "Dockerfile",
+	"build": {
+		"args": {
+			"WORKSPACE": "${containerWorkspaceFolder}"
+		}
+	},
+    "remoteUser": "aml",
+	"runArgs": [
+		"--network=host",
+		"--cap-add=SYS_PTRACE",
+		"--security-opt=seccomp:unconfined",
+		"--security-opt=apparmor:unconfined",
+		"--volume=/tmp/.X11-unix:/tmp/.X11-unix",
+		"--volume=/mnt/wslg:/mnt/wslg",
+        "--volume=/usr/lib/wsl:/usr/lib/wsl",
+        "--device=/dev/dxg",
+        "--device=/dev/dri/card0",
+        "--device=/dev/dri/renderD128",
+		"--ipc=host",
+		"--gpus=all"
+	],
+    "containerEnv": {
+		"DISPLAY": "${DISPLAY}", // Needed for GUI try ":0" for windows
+		"WAYLAND_DISPLAY": "${WAYLAND_DISPLAY}",
+		"XDG_RUNTIME_DIR": "${XDG_RUNTIME_DIR}",
+		"PULSE_SERVER": "${PULSE_SERVER}",
+		"LIBGL_ALWAYS_SOFTWARE": "1" // Needed for software rendering of opengl
+	},
+    // Set *default* container specific settings.json values on container create.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"althack.ament-task-provider",
+				"betwo.b2-catkin-tools",
+				"DotJoshJohnson.xml",
+				"ms-azuretools.vscode-docker",
+				"ms-iot.vscode-ros",
+				"ms-python.python",
+				"ms-vscode.cpptools",
+				"redhat.vscode-yaml",
+				"smilerobotics.urdf",
+                "morningfrog.urdf-visualizer",
+				"streetsidesoftware.code-spell-checker",
+				"twxs.cmake",
+				"yzhang.markdown-all-in-one",
+				"zachflower.uncrustify",
+                "ms-iot.vscode-ros",
+                "nonanonno.vscode-ros2"
+			]
+		}
+	}
+}
