@@ -34,3 +34,4 @@ ENV LIBVA_DRIVER_NAME=d3d12
 ENV LD_LIBRARY_PATH=/usr/lib/wsl/lib
 # CMD vainfo --display drm --device /dev/dri/card0
 # CMD /usr/bin/xclock
+CMD /bin/bash
