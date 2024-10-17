@@ -1,0 +1,231 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Pedro">
+<!-- 
+    Author: Prem Gandhi
+-->
+    <xacro:property name="PI" value="3.1415" />
+    
+    <xacro:property name="chassis_mass" value="1"/>
+    <xacro:property name="chassis_width" value="0.4" />
+    <xacro:property name="chassis_height" value="0.2"/>
+    <xacro:property name="chassis_depth" value="0.05"/>
+
+    <!-- wheel properties-->
+    <xacro:property name="wheel_radius" value="0.05"/>
+    <xacro:property name="wheel_width" value="0.05"/>
+    <xacro:property name="wheel_mass" value="0.05"/>
+    <xacro:property name="wheel_xgap" value="0.15"/>
+    <xacro:property name="wheel_ygap" value="0.13"/>
+    <xacro:property name="wheel_zoff" value="0.0"/>
+    
+    <xacro:macro name="cylinder_inertial" params="radius length mass *origin">
+        <inertial>
+        <mass value="${mass}" />
+        <xacro:insert_block name="origin" />
+        <inertia 
+            ixx="${0.0833333 * mass * (3 * radius * radius + length * length)}" 
+            ixy="0.0" 
+            ixz="0.0"
+            iyy="${0.0833333 * mass * (3 * radius * radius + length * length)}" 
+            iyz="0.0"
+            izz="${0.5 * mass * radius * radius}" />
+        </inertial>
+    </xacro:macro>
+
+    <xacro:macro name="box_inertial" params="mass width height depth *origin">
+        <xacro:insert_block name="origin" />
+        <inertial>
+            <mass value="${mass}" />
+            <inertia 
+                ixx="${0.0833333 * mass * (height * height + depth * depth)}" 
+                ixy="0.0" 
+                ixz="0.0"
+                iyy="${0.0833333 * mass * (width * width + height * height)}" 
+                iyz="0.0"
+                izz="${0.0833333 * mass * (width * width + depth * depth)}" 
+            />
+        </inertial>
+
+        <collision>
+            <xacro:insert_block name="origin" />
+            <geometry>
+                <box size ="${width} ${height} ${depth}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <xacro:insert_block name="origin" />
+            <geometry>
+                <box size ="${width} ${height} ${depth}"/>
+            </geometry>
+        </visual>
+    </xacro:macro>
+
+    <!-- <xacro:macro name="wheel" params="mass radius width xgap ygap zoff reflectX reflectY">
+        <xacro:cylinder_inertial radius="radius" length="width" mass="mass">
+            <xacro:if value="reflectX == True">
+                <origin xyz="{reflectX*xgap} ygap zoff" rpy="0 ${PI/2} ${PI/2}"/>
+            </xacro:if>
+            <xacro:if value="reflectY == True">
+                <origin xyz="xgap {reflectY*ygap} zoff" rpy="0 ${PI/2} ${PI/2}"/>
+            </xacro:if>
+            <xacro:if value="reflectX == True">
+                <xacro:if value="reflectY == True">
+                    <origin xyz="{reflectX*xgap}  {reflectX*ygap} zoff" rpy="0 ${PI/2} ${PI/2}"/>
+                </xacro:if>
+            </xacro:if>
+            <xacro:if value="reflectX == False">
+                <xacro:if value="reflectY == False">
+                    <origin xyz="{xgap}  {ygap} zoff" rpy="0 ${PI/2} ${PI/2}"/>
+                </xacro:if>
+            </xacro:if>
+        </xacro:cylinder_inertial>
+        
+        <collision>
+            <origin xyz="${wheel_xgap} ${wheel_ygap} ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="${wheel_xgap} ${wheel_ygap} ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </visual>
+    </xacro:macro> -->
+
+    <link name='chassis'>
+        <xacro:box_inertial mass="${chassis_mass}" width="${chassis_width}" height="${chassis_height}" depth="${chassis_depth}">
+            <origin xyz="0.0 0.0 0" rpy="0 0 0" />
+        </xacro:box_inertial>
+    </link>
+
+    <link name="FL_wheel">
+        <xacro:cylinder_inertial radius="${wheel_radius}" length="${wheel_width}" mass="${wheel_mass}">
+            <origin xyz="${wheel_xgap} ${wheel_ygap} ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+        </xacro:cylinder_inertial>
+        <collision>
+            <origin xyz="${wheel_xgap} ${wheel_ygap} ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="${wheel_xgap} ${wheel_ygap} ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="FR_wheel">
+        <xacro:cylinder_inertial radius="${wheel_radius}" length="${wheel_width}" mass="${wheel_mass}">
+            <origin xyz="${wheel_xgap} -${wheel_ygap} ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+        </xacro:cylinder_inertial>
+        <collision>
+            <origin xyz="${wheel_xgap} -${wheel_ygap} ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="${wheel_xgap} -${wheel_ygap} ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="BL_wheel">
+        <xacro:cylinder_inertial radius="${wheel_radius}" length="${wheel_width}" mass="${wheel_mass}">
+            <origin xyz="-${wheel_xgap} ${wheel_ygap} ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+        </xacro:cylinder_inertial>
+        <collision>
+            <origin xyz="-${wheel_xgap} ${wheel_ygap} ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="-${wheel_xgap} ${wheel_ygap} ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="BR_wheel">
+        <xacro:cylinder_inertial radius="${wheel_radius}" length="${wheel_width}" mass="${wheel_mass}">
+            <origin xyz="-${wheel_xgap} -${wheel_ygap} ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+        </xacro:cylinder_inertial>
+        <collision>
+            <origin xyz="-${wheel_xgap} -${wheel_ygap} ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin xyz="-${wheel_xgap} -${wheel_ygap} ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+            </geometry>
+        </visual>
+    </link>
+    
+    <link name="Front_wheel_axles">
+        <xacro:cylinder_inertial radius="${wheel_radius/10}" length="0" mass="0.01">
+            <origin xyz="${wheel_xgap} 0 ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+        </xacro:cylinder_inertial>
+        <visual>
+            <origin xyz="${wheel_xgap} 0 ${wheel_zoff}" rpy="0 ${PI/2} ${PI/2}"/>
+            <geometry>
+                <cylinder radius="${wheel_radius/10}" length="${chassis_height/.9} + .1"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <joint type="fixed" name="front_axle_joint">
+        <child link="Front_wheel_axles"/>
+        <parent link="chassis"/>
+    </joint>
+
+    <joint type="continuous" name="FL_hinge">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <child link="FL_wheel"/>
+        <parent link="Front_wheel_axles"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+
+    <joint type="continuous" name="FR_hinge">
+        <origin xyz="${wheel_xgap} -${wheel_ygap} ${wheel_zoff}" rpy="0 0 0"/>
+        <child link="FR_wheel"/>
+        <parent link="chassis"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+    
+    <joint type="continuous" name="BL_hinge">
+        <origin xyz="0 0 0.0" rpy= "0 0 0"/>
+        <child link="BL_wheel"/>
+        <parent link="chassis"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+
+    <joint type="continuous" name="BR_hinge">
+        <origin xyz="0 0 0.0" rpy= "0 0 0"/>
+        <child link="BR_wheel"/>
+        <parent link="chassis"/>
+        <axis xyz="0 1 0"/>
+    </joint>
+
+    <!-- <include>
+        <uri>model://hokuyo</uri>
+        <pose>0.2 0 0.2 0 0 0</pose>
+    </include>
+    <joint name="hokuyo_joint" type="fixed">
+        <child>hokuyo::link</child>
+        <parent>chassis</parent>
+    </joint> -->
+  </robot>
+
+  
