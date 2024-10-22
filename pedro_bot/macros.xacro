@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Pedro">
+    <xacro:macro name="cylinder_inertial" params="radius length mass *origin">
+        <inertial>
+            <mass value="${mass}" />
+            <xacro:insert_block name="origin" />
+            <inertia ixx="${0.0833333 * mass * (3 * radius * radius + length * length)}" ixy="0.0" ixz="0.0" iyy="${0.0833333 * mass * (3 * radius * radius + length * length)}" iyz="0.0" izz="${0.5 * mass * radius * radius}" />
+        </inertial>
+    </xacro:macro>
+
+    <xacro:macro name="box_inertial" params="mass width height depth *origin *material">
+        <xacro:insert_block name="origin" />
+        <inertial>
+            <mass value="${mass}" />
+            <inertia ixx="${0.0833333 * mass * (height * height + depth * depth)}" ixy="0.0" ixz="0.0" iyy="${0.0833333 * mass * (width * width + height * height)}" iyz="0.0" izz="${0.0833333 * mass * (width * width + depth * depth)}" />
+        </inertial>
+
+        <collision>
+            <xacro:insert_block name="origin" />
+            <geometry>
+                <box size ="${width} ${height} ${depth}"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <xacro:insert_block name="origin" />
+            <geometry>
+                <box size ="${width} ${height} ${depth}"/>
+            </geometry>
+            <xacro:insert_block name="material"/>
+        </visual>
+    </xacro:macro>
+</robot>

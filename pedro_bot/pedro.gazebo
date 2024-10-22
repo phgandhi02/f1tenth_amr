@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<robot>
+
+  <!-- ros_control plugin -->
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/pedro</robotNamespace>
+      <!-- <legacyModeNS>true</legacyModeNS> -->
+    </plugin>
+  </gazebo>
+
+  <!-- Chassis -->
+  <gazebo reference="chassis">
+    <material>Gazebo/Orange</material>
+    <gravity>True</gravity>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+  </gazebo>
+
+  <!-- FR_wheel -->
+  <gazebo reference="FR_wheel">
+    <material>Gazebo/Blue</material>
+    <gravity>True</gravity>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+  </gazebo>
+
+  <!-- FL_wheel -->
+  <gazebo reference="FL_wheel">
+    <material>Gazebo/Blue</material>
+    <gravity>True</gravity>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+  </gazebo>
+
+  <!-- BR_wheel -->
+  <gazebo reference="BR_wheel">
+    <material>Gazebo/Blue</material>
+    <gravity>True</gravity>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+  </gazebo>
+
+  <!-- BL_wheel -->
+  <gazebo reference="BL_wheel">
+    <material>Gazebo/Blue</material>
+    <gravity>True</gravity>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+  </gazebo>
+
+  <!-- camera -->
+  <gazebo reference="camera_link">
+    <material>Gazebo/Red</material>
+
+    <sensor name="camera" type="depth">
+      <pose> 0 0 0 0 0 0 </pose>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <camera>
+        <horizontal_fov>1.089</horizontal_fov>
+        <image>
+          <format>B8G8R8</format>
+          <width>640</width>
+          <height>480</height>
+        </image>
+        <clip>
+          <near>0.05</near>
+          <far>8.0</far>
+        </clip>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <frame_name>camera_link_optical</frame_name>
+        <min_depth>0.1</min_depth>
+        <max_depth>100.0</max_depth>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!-- hokuyo -->
+  <gazebo reference="hokuyo_link">
+    <material>Gazebo/Black</material>
+
+    <sensor name="laser" type="gpu_ray">
+      <pose> 0 0 0 0 0 0 </pose>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1.0</resolution>
+            <min_angle>-3.14</min_angle>
+            <max_angle>3.14</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.3</min>
+          <max>12</max>
+        </range>
+      </ray>
+      <always_on>true</always_on>
+      <plugin name="laser_controller" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <argument>~/out:=scan</argument>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>laser_frame</frame_name>
+      </plugin>
+      <plugin name="pc2_gpu" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>/gpu_ray</namespace>
+          <remapping>~/out:=pointcloud2</remapping>
+        </ros>
+        <output_type>sensor_msgs/PointCloud2</output_type>
+      </plugin>
+      <plugin name="pc_gpu" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>/gpu_ray</namespace>
+          <remapping>~/out:=pointcloud</remapping>
+        </ros>
+        <output_type>sensor_msgs/PointCloud</output_type>
+      </plugin>
+      <plugin name="laserscan_gpu" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>/gpu_ray</namespace>
+          <remapping>~/out:=laserscan</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+      </plugin>
+      <plugin name="range_gpu" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>/gpu_ray</namespace>
+          <remapping>~/out:=range</remapping>
+        </ros>
+        <output_type>sensor_msgs/Range</output_type>
+      </plugin>
+    </sensor>
+  </gazebo>
+</robot>
