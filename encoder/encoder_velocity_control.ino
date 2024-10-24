@@ -22,7 +22,7 @@ float eintegral = 0;
 
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
 
   pinMode(ENCA,INPUT);
   pinMode(ENCB,INPUT);
@@ -38,13 +38,13 @@ void loop() {
   int pos = 0;
 // Compute velocity with method 1
   long currT = micros();
-  float deltaT = ((float) (currT-prevT))/1.0e6;
-  float velocity1 = (pos - posPrev)/deltaT;
-  posPrev = pos;
+  float deltaT = ((float) (currT-prevT));
+  float velocity1 = (pos_i - posPrev)*(1e6)/deltaT;
+  posPrev = pos_i;
   prevT = currT;
 
     // Convert count/s to RPM
-  float v1 = velocity1/600.0*60.0;
+  float v1 = velocity1/11*60.0;
 
   // Low-pass filter (25 Hz cutoff)
   v1Filt = 0.854*v1Filt + 0.0728*v1 + 0.0728*v1Prev;
