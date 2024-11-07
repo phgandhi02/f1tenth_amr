@@ -10,6 +10,15 @@ This project is based on the [F1Tenth project](https://f1tenth.org/). Refer to t
 1. Controls for Robotics
 1. Computervision
 
+## Repo Architecture:
+The repo is organized in the following fashion:
+ - f1tenth_amr repo directory:
+    - .devcontainer: This is to enable portability and reproducability of code. The repo was developed on VS Code so you can use VS Code to open the devcontainer and run the code in the repo.
+    - carlikeBot: This directory contains the ROS package to run the car in Gazebo using ROS2 control and gazebo_ros2_pkgs. Please refer to the package README for more details.
+    - .gitignore: This file removes any unnessary files from tracking. Make adjustments as necessary to ensure repo only contains files that are relevant.
+    - hardwareList.md: This file contains all the hardware that was used in the project to develop the car.
+    - workflowSteps.md: This file walks through how the project was developed to assist others who may be trying to imitate or learn how we developed this car. 
+
 
 The F1tenth_amr is a autonomous guided car that uses Lidar and camera to navigate the map. The project uses the Robotics Operation System (ROS), and use Issac Sim to simulate the robot. 
 
