@@ -3,7 +3,7 @@
 	"privileged": true,
 	"remoteUser": "prem",
 	"build": {
-		"dockerFile": "Dockerfile",
+		"dockerfile": "Dockerfile",
 		"args": {
 			"USERNAME": "prem"
 		}
