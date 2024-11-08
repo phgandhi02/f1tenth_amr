@@ -17,3 +17,5 @@
 Use the following commands to build and run the Dockerfile:
 1. `docker build -t videoaccel -f Dockerfile.videoaccel .`
 1. `docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -v /mnt/wslg:/mnt/wslg -v /usr/lib/wsl:/usr/lib/wsl --device=/dev/dxg -e DISPLAY= --device /dev/dri/card0 --device /dev/dri/renderD128 -e WAYLAND_DISPLAY= -e XDG_RUNTIME_DIR= -e PULSE_SERVER= --gpus all videoaccel`
+
+
