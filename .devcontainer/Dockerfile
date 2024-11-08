@@ -1,37 +1,28 @@
-#Refer to this for info: https://github.com/microsoft/wslg/blob/main/samples/container/Containers.md
-FROM kaspergrontved/px4:v1.14
+FROM ros:ROS_DISTRO
+ARG USERNAME=USERNAME
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
 
-# ** [Optional] Uncomment this section to install additional packages. **
-#
-# ENV DEBIAN_FRONTEND=noninteractive
-# RUN apt-get update \
-#    && apt-get -y install --no-install-recommends <your-package-list-here> \
-#    #
-#    # Clean up
-#    && apt-get autoremove -y \
-#    && apt-get clean -y \
-#    && rm -rf /var/lib/apt/lists/*
-# ENV DEBIAN_FRONTEND=dialog
+# Delete user if it exists in container (e.g Ubuntu Noble: ubuntu)
+RUN if id -u $USER_UID ; then userdel `id -un $USER_UID` ; fi
 
-# Add an environment variable for the workspace
-ARG WORKSPACE
-RUN echo "if [ -f ${WORKSPACE}/install/setup.bash ]; then source ${WORKSPACE}/install/setup.bash; fi" >> /home/ros/.bashrc
-RUN echo "source /home/ros/ws_sensor_combined/install/setup.bash" >> /home/ros/.bashrc
+# Create the user
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    #
+    # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
+    && apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y python3-pip
+ENV SHELL /bin/bash
 
-ARG DEBIAN_FRONTEND=noninteractive
+# ********************************************************
+# * Anything else you want to do like clean up goes here *
+# ********************************************************
 
-RUN apt update && \
-   apt install -y x11-apps
-
-RUN apt update && \
-    apt install -y mesa-utils
-
-RUN apt update && apt install -y \
-vainfo \
-mesa-va-drivers
-
-ENV LIBVA_DRIVER_NAME=d3d12
-ENV LD_LIBRARY_PATH=/usr/lib/wsl/lib
-# CMD vainfo --display drm --device /dev/dri/card0
-# CMD /usr/bin/xclock
-CMD /bin/bash
+# [Optional] Set the default user. Omit if you want to keep the default as root.
+USER $USERNAME
+CMD ["/bin/bash"]
