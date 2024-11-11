@@ -18,6 +18,10 @@ The repo is organized in the following fashion:
     - src: This directory contains all the ROS2 Packages developed for this project. It will be the build path for `colcon build`. All ROS2 code should go under this folder in a package structure.
     - .gitignore: This file removes any unnessary files from tracking. Make adjustments as necessary to ensure repo only contains files that are relevant.
     - hardwareList.md: This file contains all the hardware that was used in the project to develop the car.
+    - .gitsubmodules: This file will list all the submodules present in this repo. The submodules are: 
+        1. vscode-devcontainer submodule for running the code on a machine with WSL2.
+        2. diffdrive_arduino for implementing hardware interface between SBC and arduino for ros2_control.
+        3. RPA1 Lidar ros2 package. (currently the submodule feature for this isn't working.)
     - workflowSteps.md: This file walks through how the project was developed to assist others who may be trying to imitate or learn how we developed this car. 
 
 
