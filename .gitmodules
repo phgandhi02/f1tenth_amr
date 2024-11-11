@@ -1,6 +1,10 @@
 [submodule "sllidar_ros2"]
-	path = ./src/sllidar_ros2
-	url = https://github.com/Slamtec/sllidar_ros2.git
+	path = src/sllidar_ros2
+	url = git@github.com:Slamtec/sllidar_ros2.git
 [submodule "diffdrive_arduino"]
-	path = diffdrive_arduino
+	path = src/diffdrive_arduino
 	url = git@github.com:joshnewans/diffdrive_arduino.git
+[submodule "vscode_ros2_workspace"]
+	path = vscode_ros2_workspace
+	url = https://github.com/SESASR-Course/vscode_ros2_workspace.git
+	branch = humble-nvidia
