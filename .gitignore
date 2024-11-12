@@ -1,5 +1,9 @@
 # Repo Specific
 /f1tenth_labs/*
+log/
+install/
+build/
+
 # ROS2 .gitignore
 devel/
 logs/

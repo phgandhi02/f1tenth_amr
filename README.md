@@ -13,10 +13,9 @@ This project is based on the [F1Tenth project](https://f1tenth.org/). Refer to t
 ## Repo Architecture:
 The repo is organized in the following fashion:
  - f1tenth_amr repo directory:
-    - vscode_ros2_workspace: This is to enable portability and reproducability of code. The repo was developed on VS Code so you can use VS Code to open the devcontainer and run the code in the repo. This devcontainer is designed for WSL2 on Windows and provides ROS2 Humble, gazebo classic, ign gazebo, and nvidia gpu support. GUIs should display and if there are any issues then please refer to the README under that directory. The devcontainer comes with built in VS Code tasks which enable easy installing repos, exporting repos, building, etc. 
-    - carlikeBot: **This repo will be moved into src directory.** This directory contains the ROS package to run the car in Gazebo using ROS2 control and gazebo_ros2_pkgs. Please refer to the package README for more details.
+    - vscode_ros2_workspace: This is to enable portability and reproducibility of code. The repo was developed on VS Code so you can use VS Code to open the devcontainer and run the code in the repo. This devcontainer is designed for WSL2 on Windows and provides ROS2 Humble, gazebo classic, ign gazebo, and nvidia gpu support. GUIs should display and if there are any issues then please refer to the README under that directory. The devcontainer comes with built in VS Code tasks which enable easy installing repos, exporting repos, building, etc. 
     - src: This directory contains all the ROS2 Packages developed for this project. It will be the build path for `colcon build`. All ROS2 code should go under this folder in a package structure.
-    - .gitignore: This file removes any unnessary files from tracking. Make adjustments as necessary to ensure repo only contains files that are relevant.
+    - .gitignore: This file removes any unnecessary files from tracking. Make adjustments as necessary to ensure repo only contains files that are relevant.
     - hardwareList.md: This file contains all the hardware that was used in the project to develop the car.
     - .gitsubmodules: This file will list all the submodules present in this repo. The submodules are: 
         1. vscode-devcontainer submodule for running the code on a machine with WSL2.
