@@ -10,6 +10,11 @@ This project is based on the [F1Tenth project](https://f1tenth.org/). Refer to t
 1. Controls for Robotics
 1. Computervision
 
+## Instructions for Development:
+### Connecting a Serial Device:
+Refer to this wiki page: https://github.com/phgandhi02/f1tenth_amr/wiki/Project-Book-of-Knowledge#access-usb-devices-through-wsl2
+
+
 ## Repo Architecture:
 The repo is organized in the following fashion:
  - f1tenth_amr repo directory:
