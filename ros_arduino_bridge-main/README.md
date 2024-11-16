@@ -5,15 +5,12 @@ It provides a simple serial interface to communicate with a high-level computer 
 
 This is a fork of the original code, with some changes, and removal of the ROS nodes (see [this repo](https://github.com/joshnewans/serial_motor_demo) for an alternative). Check out `README-orig.md` for the original README.
 
-As I only have need for a subset of the functionality, I have no idea what does and doesn't work, beyond what is detailed below.
-Feedback/improvements are welcome (though no promises on how quickly I'll respond). I currently only use the L298N driver, and the Arduino encoder mode.
-
 ## Pin Connections:
-![Arduino Pins for DC motors](dc_pin_mapping.png)
-![Arduino Pins for Encoder Pins](encoder_pins_mapping
-.png)
-TODO
-- Finish this README
+The pins for the DC motors are as follows if using an L298N. We are using the Grok Motor Driver listed in the Hardware list in the main git dir. 
+![Arduino Pins for DC motors](./dc_pin_mapping.png)
+
+Below are the pin mappings for the motor encoders to the Arduino. The pins can be adjusted by changing the pin number within the source code.
+![Arduino Pins for Encoder Pins](./encoder_pins_mapping.png)
 
 
 ## Functionality
@@ -44,7 +41,10 @@ Some quick things to note
 
 
 ## TODO (maybe)
+- include bash file for adding user to the dialout group and automated setup for use of this lib. Maybe turn into a docker container. 
+- change from carriage return to newline. 
+- increase the baude rate for higher response which is necessary for higher speeds.
+- consolidate READMEs
 - Document PID tuning
 - Make the speed input counts per second
 - Add/test more driver boards
-- Add/test other functionality
