@@ -23,7 +23,7 @@ The main commands to know are
 - `e` - Motor responds with current encoder counts for each motor
 - `r` - Reset encoder values
 - `o <PWM1> <PWM2>` - Set the raw PWM speed of each motor (-255 to 255)
-- `m <Spd1> <Spd2>` - Set the closed-loop speed of each motor in *counts per loop* (Default loop rate is 30, so `(counts per sec)/30`
+- `m <Spd1> <Spd2>` - Set the closed-loop speed of each motor in *counts per loop* (Default loop rate is 30, so `(counts per sec)/30`)
 - `p <Kp> <Kd> <Ki> <Ko>` - Update the PID parameters
 
 

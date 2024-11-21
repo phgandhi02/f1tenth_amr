@@ -21,6 +21,7 @@ byte servoInitPosition [N_SERVOS] = { 90, 90 }; // [0, 180] degrees
 
 class SweepServo
 {
+  // Defining the functions available in the SweepServo Class which is a servo motor that sweeps left and right based on an analog (ie. PWM) input. 
   public:
     SweepServo();
     void initServo(
