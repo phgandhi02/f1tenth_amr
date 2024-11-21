@@ -5,3 +5,7 @@
 	path = vscode_ros2_workspace
 	url = git@github.com:phgandhi02/vscode_ros2_workspace.git
 	branch = humble-nvidia
+[submodule "src/diffdrive_arduino"]
+	path = src/diffdrive_arduino
+	url = https://github.com/phgandhi02/diffdrive_arduino.git
+	branch = humble
